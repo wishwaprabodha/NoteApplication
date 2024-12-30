@@ -4,8 +4,8 @@ info:
   description: API documentation for the Note Application
   version: 1.0.0
 servers:
- - url: http://localhost:8000
-   description: Local development server
+  - url: http://localhost:8000
+    description: Local development server
 components:
   securitySchemes:
     bearerAuth:
@@ -59,7 +59,7 @@ paths:
         - User
       summary: Get User
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
         - name: userName
           in: query
@@ -108,7 +108,7 @@ paths:
         - Note
       summary: Create Note
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       requestBody:
         required: true
         content:
@@ -138,7 +138,7 @@ paths:
         - Note
       summary: Update Note
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       requestBody:
         required: true
         content:
@@ -165,7 +165,7 @@ paths:
         - Note
       summary: Delete Note
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       requestBody:
         required: true
         content:
@@ -189,7 +189,7 @@ paths:
         - Note
       summary: Get All Notes
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       responses:
         '200':
           description: List of notes retrieved successfully
@@ -205,9 +205,9 @@ paths:
         - User
       summary: Refresh Token
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       requestBody:
-        content: {}
+        content: { }
       responses:
         '200':
           description: Token refreshed successfully
@@ -215,3 +215,67 @@ paths:
             application/json:
               schema:
                 type: object
+  /api/note/history:
+    get:
+      tags:
+        - default
+      summary: Revert a Note to Revision
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/share-note/share:
+      post:
+        tags:
+          - default
+        summary: Share Note to a User
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  noteId: 8
+                  sharingUserEmail: wishwap@icloud.com
+        security:
+          - bearerAuth: [ ]
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json: { }
+  /api/share-note/remove-share:
+      post:
+        tags:
+          - default
+        summary: Remove Shared Note
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  noteId: 8
+                  sharingUserId: 2
+        security:
+          - bearerAuth: [ ]
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json: { }
+  /api/share-note/8/2:
+      get:
+        tags:
+          - default
+        summary: Get Shared Note
+        security:
+          - bearerAuth: [ ]
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json: { }
