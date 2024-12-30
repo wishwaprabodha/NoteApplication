@@ -32,6 +32,21 @@ const UserNoteModel = (sequelize) => {
         timestamps: true,
         createdAt: 'created_at',
         updatedAt: 'updated_at',
+        indexes: [
+            {
+                name: 'idx_user_notes_title',
+                fields: ['title']
+            },
+            {
+                name: 'idx_user_notes_content',
+                type: 'FULLTEXT',
+                fields: ['content']
+            },
+            {
+                name: 'idx_user_notes_user_id',
+                fields: ['user_id']
+            }
+        ]
     });
 
     UserNote.associate = (models) => {
