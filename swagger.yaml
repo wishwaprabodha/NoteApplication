@@ -1,0 +1,217 @@
+openapi: 3.0.0
+info:
+  title: Note Application
+  description: API documentation for the Note Application
+  version: 1.0.0
+servers:
+ - url: http://localhost:8000
+   description: Local development server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+paths:
+  /api/health:
+    get:
+      tags:
+        - Health
+      summary: Health Check
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+  /api/user/login:
+    post:
+      tags:
+        - User
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: wishwap@icloud.com
+                password:
+                  type: string
+                  example: password3
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/user:
+    get:
+      tags:
+        - User
+      summary: Get User
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userName
+          in: query
+          required: true
+          schema:
+            type: string
+            example: wishwa
+      responses:
+        '200':
+          description: User details fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/user/register:
+    post:
+      tags:
+        - User
+      summary: Register User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  example: wishwap@icloud.com
+                password:
+                  type: string
+                  example: wishwa
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/note/create:
+    post:
+      tags:
+        - Note
+      summary: Create Note
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Sharing Note
+                content:
+                  type: string
+                  example: This note is intended for sharing
+                multimedia:
+                  type: string
+                  example: multimedia-url
+      responses:
+        '201':
+          description: Note created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/note/update-note:
+    put:
+      tags:
+        - Note
+      summary: Update Note
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                noteId:
+                  type: integer
+                  example: 6
+                title:
+                  type: string
+                  example: Updated Note Title
+      responses:
+        '200':
+          description: Note updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/note/delete-note:
+    delete:
+      tags:
+        - Note
+      summary: Delete Note
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                noteId:
+                  type: integer
+                  example: 6
+      responses:
+        '200':
+          description: Note deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/note/all:
+    get:
+      tags:
+        - Note
+      summary: Get All Notes
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of notes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+  /api/user/refresh:
+    post:
+      tags:
+        - User
+      summary: Refresh Token
+      security:
+        - bearerAuth: []
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                type: object
