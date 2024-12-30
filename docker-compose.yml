@@ -1,0 +1,56 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: superSecretPassword
+      MYSQL_DATABASE: noteDB
+    volumes:
+      - ./temp/mysql:/var/lib/mysql
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    container_name: redis_local
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./temp/redis:/data
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node_app
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - DIALECT=mysql
+      - APP_PORT=8000
+      - JWT_SECRET=nvdsfilvnfpiSLDJADN:3q439@@
+      - REFRESH_SECRET=nvdsfilvnfpiSLDJADN:3q439@@
+      - CACHE_EXPIRATION=3600
+      - PRODUCTION=true
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DATABASE=noteDB
+      - USERNAME=root
+      - PASSWORD=superSecretPassword
+      - HOST=db
+    depends_on:
+      - db
+      - redis
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
