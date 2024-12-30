@@ -32,7 +32,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - PORT=8000
+      - PORT=3306
       - DIALECT=mysql
       - APP_PORT=8000
       - JWT_SECRET=nvdsfilvnfpiSLDJADN:3q439@@
@@ -45,6 +45,7 @@ services:
       - USERNAME=root
       - PASSWORD=superSecretPassword
       - HOST=db
+      - REDIS_PASSWORD=your_redis_password
     depends_on:
       - db
       - redis
