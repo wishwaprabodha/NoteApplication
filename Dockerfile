@@ -1,7 +1,7 @@
 FROM node:20
 
 RUN apt-get update && apt-get install -y iputils-ping
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
 
