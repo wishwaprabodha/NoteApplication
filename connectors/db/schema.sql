@@ -13,7 +13,7 @@ CREATE TABLE `user_notes`
     user_note_id   int          NOT NULL AUTO_INCREMENT,
     user_id        int          NOT NULL,
     title          varchar(255) NOT NULL,
-    content        text         NOT NULL,
+    content        varchar(255)         NOT NULL,
     latest_version int          NOT NULL,
     is_deleted     tinyint(1)   NOT NULL,
     created_at     datetime DEFAULT CURRENT_TIMESTAMP,

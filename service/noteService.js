@@ -44,7 +44,7 @@ async function createNote(note) {
         const noteObject = {
             user_id: note.user_id,
             latest_version: 1,
-            is_deleted: false
+            is_deleted: false,
         }
         const insertedNote = await noteRepository.createNote(noteObject);
         const cacheKey = `user_notes_${note.user_id}`;
