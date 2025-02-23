@@ -28,15 +28,6 @@ function logger() {
         ],
     });
 
-    loggerLib.add(
-            new DailyRotateFile({
-                filename: 'tmp/application-%DATE%.log',
-                datePattern: 'YYYY-MM-DD',
-                zippedArchive: true,
-                maxSize: '20m',
-                maxFiles: '7d',
-        })
-    );
     return loggerLib;
 }
 
