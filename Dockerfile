@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install
-
+RUN mkdir -p /app/logs && chmod 777 /app/logs
 COPY . .
 
 EXPOSE 8000
